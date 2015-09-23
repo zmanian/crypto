@@ -23,7 +23,7 @@
  *
  *   1) Promise = respondible for sharding the secret, creating shares, and
  *                tracking which shares belong to which insurers
-*
+ *
  *   2) State = responsible for keeping state about a given Promise such
  *              as shares recovered and messages that either certify the
  *              promise or prove that it is malicious
