@@ -1,14 +1,16 @@
 package poly
 
 import (
+	"bytes"
 	"fmt"
+	_ "github.com/dedis/crypto/abstract"
 	"testing"
 )
 
 /////// TESTING ///////
 
 func TestReceiverAddDealer(t *testing.T) {
-	dealers, receivers := generateNDealerMReceiver(PolyInfo{edward, 2, 3, 3}, 3, 3)
+	dealers, receivers := generateNDealerMReceiver(PolyInfo{2, 3, 3}, 3, 3)
 	// Test adding one dealer
 	_, e1 := receivers[0].AddDealer(0, dealers[0])
 	if e1 != nil {
@@ -33,7 +35,7 @@ func rightDealerAddResponse(t *testing.T) {
 	// Test if all goes well with the right inputs
 	n := 3
 	m := 3
-	dealers, receivers := generateNDealerMReceiver(PolyInfo{edward, 2, 3, 3}, n, m)
+	dealers, receivers := generateNDealerMReceiver(PolyInfo{2, 3, 3}, n, m)
 	// for each receiver
 	for i := 0; i < m; i++ {
 		// add all the dealers
@@ -66,7 +68,7 @@ func TestDealerAddResponse(t *testing.T) {
 func wrongDealerAddResponse(t *testing.T) {
 	n := 2
 	m := 3
-	dealers, receivers := generateNDealerMReceiver(PolyInfo{edward, 2, 3, 3}, n, m)
+	dealers, receivers := generateNDealerMReceiver(PolyInfo{2, 3, 3}, n, m)
 	r1, _ := receivers[0].AddDealer(0, dealers[0])
 	err := dealers[0].AddResponse(1, r1)
 	if err == nil {
@@ -80,7 +82,7 @@ func TestProduceSharedSecret(t *testing.T) {
 	defer func() { SECURITY = MAXIMUM }()
 	n := 3
 	m := 3
-	_, receivers := generateNMSetup(PolyInfo{edward, 2, 3, 3}, n, m)
+	_, receivers := generateNMSetup(PolyInfo{2, 3, 3}, n, m)
 	s1, err := receivers[0].ProduceSharedSecret()
 	if err != nil {
 		t.Error(fmt.Sprintf("ProduceSharedSecret should not gen any error : %v", err))
@@ -104,17 +106,17 @@ func TestProduceSharedSecret(t *testing.T) {
 
 func TestPolyInfoMarshalling(t *testing.T) {
 	pl := PolyInfo{
-		T:     3,
-		R:     5,
-		N:     8,
-		Suite: SUITE,
+		T: 3,
+		R: 5,
+		N: 8,
 	}
-	buf, err := pl.MarshalBinary()
+	b := new(bytes.Buffer)
+	err := SUITE.Write(b, &pl)
 	if err != nil {
 		t.Error(fmt.Sprintf("PolyInfo MarshalBinary should not return error : %v", err))
 	}
 	pl2 := PolyInfo{}
-	err = pl2.UnmarshalBinary(buf)
+	err = SUITE.Read(bytes.NewBuffer(b.Bytes()), &pl2)
 	if err != nil {
 		t.Error(fmt.Sprintf("PolyInfo UnmarshalBinary should not return error : %v", err))
 	}
@@ -127,28 +129,72 @@ func TestPolyInfoMarshalling(t *testing.T) {
 
 func TestDealerMarshalling(t *testing.T) {
 	pl := PolyInfo{
-		T:     5,
-		R:     6,
-		N:     7,
-		Suite: SUITE,
+		T: 5,
+		R: 6,
+		N: 7,
 	}
 	kpl := generateKeyPairList(7)
 	kp := generatePublicListFromPrivate(kpl)
 	d := NewDealer(pl, generateKeyPair(), generateKeyPair(), kp)
-	buf, err := d.MarshalBinary()
+	b := new(bytes.Buffer)
+	err := SUITE.Write(b, d)
 
 	if err != nil {
 		t.Error(fmt.Sprintf("Error marshaling dealer %v ", err))
 	}
-
-	d2 := new(Dealer)
-	err = d2.UnmarshalBinary(buf)
+	buf := b.Bytes()
+	d2 := new(Dealer).UnmarshalInit(pl)
+	err = SUITE.Read(bytes.NewBuffer(buf), d2)
 
 	if err != nil {
 		t.Error(fmt.Sprintf("Error unmarshaling dealer %v", err))
 	}
-
 	if !d.Equal(d2) {
-		t.Error("Dealers should be equals after marshalling ...")
+		if !d.Info.Equal(d2.Info) {
+			t.Error("Dealers do not share common PolyInfo")
+		} else {
+			t.Error("Dealer's Promises should be equals after marshalling ...")
+		}
+	}
+}
+
+func TestProduceSharedSecretMarshalledDealer(t *testing.T) {
+	SECURITY = MODERATE
+	defer func() { SECURITY = MAXIMUM }()
+	// Test if all goes well with the right inputs
+	n := 3
+	m := 3
+	pl := PolyInfo{2, 3, 3}
+	dealers, receivers := generateNDealerMReceiver(pl, n, m)
+	// for each receiver
+	for i := 0; i < m; i++ {
+		// add all the dealers
+		for j := 0; j < n; j++ {
+			b := new(bytes.Buffer)
+			err := SUITE.Write(b, dealers[j])
+			if err != nil {
+				t.Error("Write(Dealer) should not gen any error : ", err)
+			}
+			buf := b.Bytes()
+			bb := bytes.NewBuffer(buf)
+			d2 := new(Dealer).UnmarshalInit(pl)
+			err = SUITE.Read(bb, d2)
+			if err != nil {
+				t.Error("Read(Dealer) should not gen any error : ", err)
+			}
+			resp, err := receivers[i].AddDealer(i, d2)
+			if err != nil {
+				t.Error("AddDealer should not generate error")
+			}
+			// then give the response back to the dealer
+			err = dealers[j].AddResponse(i, resp)
+			if err != nil {
+				t.Error(fmt.Sprintf("AddResponse should not generate any error : %v", err))
+			}
+		}
+	}
+	_, err := receivers[0].ProduceSharedSecret()
+	if err != nil {
+		t.Error(fmt.Sprintf("ProduceSharedSecret with Marshalled dealer should work : %v", err))
 	}
 }
