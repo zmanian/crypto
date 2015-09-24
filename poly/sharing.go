@@ -152,6 +152,17 @@ func (ps *PriShares) SetShare(i int, s abstract.Secret) {
 	ps.s[i] = s
 }
 
+// Return the number of shares set by SetShare.
+func (ps *PriShares) NumShares() int {
+	n := 0
+	for _, s := range ps.s {
+		if s != nil {
+			n++
+		}
+	}
+	return n
+}
+
 // Create an array of x-coordinates we need for Lagrange interpolation.
 // In the returned array, exactly k x-coordinates are non-nil.
 func (ps *PriShares) xCoords() []abstract.Secret {

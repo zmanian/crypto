@@ -131,7 +131,7 @@ func (r *Receiver) AddDealer(index int, dealer *Dealer) (*Response, error) {
 		return nil, errors.New(fmt.Sprintf("Wrong index received for receiver : %d instead of %d", index, r.index))
 	}
 	// produce response
-	resp, err := dealer.Promise.ProduceResponse(index, r.Key)
+	_, resp, err := dealer.Promise.ProduceResponse(index, r.Key)
 	if err == nil {
 		r.Dealers = append(r.Dealers, dealer)
 	}

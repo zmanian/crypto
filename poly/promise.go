@@ -377,22 +377,20 @@ func (p *Promise) diffieHellmanSecret(diffieBase abstract.Point) abstract.Secret
  * Return
  *  an error if the share is malformed, nil otherwise.
  */
-func (p *Promise) verifyShare(i int, gKeyPair *config.KeyPair) error {
+func (p *Promise) verifyShare(i int, gKeyPair *config.KeyPair) (abstract.Secret, error) {
 	if i < 0 || i >= p.n {
-		return errors.New("Invalid index. Expected 0 <= i < n")
+		return nil, errors.New("Invalid index. Expected 0 <= i < n")
 	}
-	msg := "The long-term public key the Promise recorded as the insurer" +
-		"of this shares differs from what is expected"
 	if !p.insurers[i].Equal(gKeyPair.Public) {
-		return errors.New(msg)
+		return nil, errors.New("Wrong insurer public key")
 	}
 	diffieBase := p.suite.Point().Mul(p.pubKey, gKeyPair.Secret)
 	diffieSecret := p.diffieHellmanSecret(diffieBase)
 	share := p.suite.Secret().Sub(p.secrets[i], diffieSecret)
 	if !p.pubPoly.Check(i, share) {
-		return maliciousShare
+		return nil, maliciousShare
 	}
-	return nil
+	return share, nil
 }
 
 /* An internal helper function responsible for producing signatures
@@ -517,25 +515,26 @@ func (p *Promise) verifyBlame(i int, bproof *blameProof) error {
  *   the Response, or nil if there is an error.
  *   an error, nil otherwise.
  */
-func (p *Promise) ProduceResponse(i int, gKeyPair *config.KeyPair) (*Response, error) {
-	if err := p.verifyShare(i, gKeyPair); err != nil {
+func (p *Promise) ProduceResponse(i int, gKeyPair *config.KeyPair) (abstract.Secret, *Response, error) {
+	share, err := p.verifyShare(i, gKeyPair)
+	if err != nil {
 		// verifyShare may also fail because the index is invalid or
 		// the insurer key is not the one expected. Do not produce a
 		// blameProof in these cases, simply ignore the Promise till
 		// the promiser sends the valid index for this insurer.
 		if err != maliciousShare {
-			return nil, err
+			return nil, nil, err
 		}
 
 		blameProof, err := p.blame(i, gKeyPair)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
-		return new(Response).constructBlameProofResponse(blameProof), nil
+		return nil, new(Response).constructBlameProofResponse(blameProof), nil
 	}
 
 	sig := p.sign(i, gKeyPair, sigMsg)
-	return new(Response).constructSignatureResponse(sig), nil
+	return share, new(Response).constructSignatureResponse(sig), nil
 }
 
 /* An internal function, reveals the secret share that the insurer has been
@@ -1488,6 +1487,15 @@ type Response struct {
 
 	// blameProof showing that the Promise has been badly constructed.
 	blameProof *blameProof
+}
+
+/*
+ * Returns true if the Response represents a positive confirmation
+ * that Promise p is good.
+ */
+func (r *Response) Good() bool {
+	// XXX missing Promise binding check!  FIX
+	return r.rtype == signatureResponse
 }
 
 /* An internal function, constructs a new Response with a signature
