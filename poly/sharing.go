@@ -165,7 +165,7 @@ func (ps *PriShares) NumShares() int {
 
 // Create an array of x-coordinates we need for Lagrange interpolation.
 // In the returned array, exactly k x-coordinates are non-nil.
-func (ps *PriShares) xCoords() []abstract.Secret {
+func (ps *PriShares) xCoords() ([]abstract.Secret, error) {
 	x := make([]abstract.Secret, len(ps.s))
 	c := 0
 	for i := range ps.s {
@@ -173,23 +173,23 @@ func (ps *PriShares) xCoords() []abstract.Secret {
 			x[i] = ps.g.Secret().SetInt64(1 + int64(i))
 			c++
 			if c >= ps.k {
-				break // have enough shares, ignore any more
+				return x, nil // have enough shares
 			}
 		}
 	}
-	if c < ps.k {
-		panic("Not enough shares to reconstruct secret")
-	}
-	return x
+	return nil, errors.New("Not enough shares to reconstruct secret")
 }
 
 // Use Lagrange interpolation to reconstruct a secret,
 // from a private share array of which
 // at least a threshold k of shares are populated (non-nil).
-func (ps *PriShares) Secret() abstract.Secret {
+func (ps *PriShares) Secret() (abstract.Secret, error) {
 
 	// compute Lagrange interpolation for point x=0 (the shared secret)
-	x := ps.xCoords()
+	x, err := ps.xCoords()
+	if err != nil {
+		return nil, err
+	}
 	a := ps.g.Secret().Zero() // sum accumulator
 	n := ps.g.Secret()        // numerator temporary
 	d := ps.g.Secret()        // denominator temporary
@@ -209,7 +209,7 @@ func (ps *PriShares) Secret() abstract.Secret {
 		}
 		a.Add(a, n.Div(n, d))
 	}
-	return a
+	return a, nil
 }
 
 func (ps *PriShares) String() string {
@@ -438,7 +438,7 @@ func (ps *PubShares) SetShare(i int, p abstract.Point) {
 
 // Create an array of x-coordinates we need for Lagrange interpolation.
 // In the returned array, exactly k x-coordinates are non-nil.
-func (ps *PubShares) xCoords() []abstract.Secret {
+func (ps *PubShares) xCoords() ([]abstract.Secret, error) {
 	x := make([]abstract.Secret, len(ps.p))
 	c := 0
 	for i := range ps.p {
@@ -446,25 +446,25 @@ func (ps *PubShares) xCoords() []abstract.Secret {
 			x[i] = ps.g.Secret().SetInt64(1 + int64(i))
 			c++
 			if c >= ps.k {
-				break // have enough shares, ignore any more
+				return x, nil // have enough shares
 			}
 		}
 	}
-	if c < ps.k {
-		panic("Not enough shares to reconstruct secret")
-	}
-	return x
+	return nil, errors.New("Not enough shares to reconstruct secret")
 }
 
 // Use Lagrange interpolation homomorphically
 // to reconstruct a secret commitment,
 // from an array of share commitments of which
 // at least a threshold k of shares are populated (non-nil).
-func (ps *PubShares) SecretCommit() abstract.Point {
+func (ps *PubShares) SecretCommit() (abstract.Point, error) {
 
 	// compute Lagrange interpolation for point x=0 (the shared secret)
 	// XXX could probably share more code with non-homomorphic version.
-	x := ps.xCoords()
+	x, err := ps.xCoords()
+	if err != nil {
+		return nil, err
+	}
 	n := ps.g.Secret()       // numerator temporary
 	d := ps.g.Secret()       // denominator temporary
 	t := ps.g.Secret()       // temporary secret
@@ -486,7 +486,7 @@ func (ps *PubShares) SecretCommit() abstract.Point {
 		P.Mul(ps.p[i], n.Div(n, d))
 		A.Add(A, P)
 	}
-	return A
+	return A, nil
 }
 
 func (ps *PubShares) String() string {
@@ -531,7 +531,11 @@ func testSharing(g abstract.Group) {
 	}
 
 	ps1 := new(PriShares).Split(p1, n)
-	if !ps1.Secret().Equal(p1.Secret()) {
+	ps1sec, err := ps1.Secret()
+	if err != nil {
+		panic(err)
+	}
+	if !ps1sec.Equal(p1.Secret()) {
 		panic("Secret recovery doesn't work!")
 	}
 
@@ -559,7 +563,9 @@ func testSharing(g abstract.Group) {
 		ps1.SetShare(i, nil)
 		pubs1.SetShare(i, nil)
 	}
-	if !ps1.Secret().Equal(p1.Secret()) {
+	ps1sec, err = ps1.Secret()
+	if err != nil { panic(err) }
+	if !ps1sec.Equal(p1.Secret()) {
 		panic("Secret recovery from partial set doesn't work!")
 	}
 
@@ -568,16 +574,22 @@ func testSharing(g abstract.Group) {
 	if !P.Equal(pub1.SecretCommit()) {
 		panic("Public polynomial committed wrong secret")
 	}
-	if !P.Equal(pubs1.SecretCommit()) {
+	Psc, err := pubs1.SecretCommit()
+	if err != nil { panic(err) }
+	if !P.Equal(Psc) {
 		panic("Homomorphic secret reconstruction didn't work")
 	}
 
 	// Cut to the minimum number of shares
 	ps1.SetShare(1, nil)
-	if !ps1.Secret().Equal(p1.Secret()) {
+	ps1sec, err = ps1.Secret()
+	if err != nil { panic(err) }
+	if !ps1sec.Equal(p1.Secret()) {
 		panic("Secret recovery from partial set doesn't work!")
 	}
-	if !P.Equal(pubs1.SecretCommit()) {
+	Psc, err = pubs1.SecretCommit()
+	if err != nil {panic(err) }
+	if !P.Equal(Psc) {
 		panic("Homomorphic secret reconstruction didn't work")
 	}
 }

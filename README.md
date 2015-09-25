@@ -65,6 +65,20 @@ groups (e.g., both integer and elliptic curves), although it will likely be
 incompatible with other implementations of ECDH.
 http://en.wikipedia.org/wiki/Elliptic_curve_Diffie%E2%80%93Hellman
 
+Contributors
+------------
+
+William Bailey
+Henry Corrigan-Gibbs
+Bryan Ford
+Linus Gasser, Nicolas Gailly
+Daniel Jackowitz
+Benjamin Peterson
+Iulia Tamas
+Dylan Visher
+Lining Wang
+David Isaac Wolinsky
+...
 
 Copyright (C) 2014 Yale DeDiS Group
 -----------------------------------

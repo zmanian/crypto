@@ -116,7 +116,7 @@
  *              during secret reconstruction.
  *
  *   Users of this code = programmers wishing to use this code in programs
-*/
+ */
 package poly
 
 import (

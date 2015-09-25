@@ -213,7 +213,10 @@ func (s *Schnorr) SchnorrSig() (*SchnorrSig, error) {
 		pri.SetShare(ps.Index, *s.partials[i].Part)
 	}
 	// lagrange interpolation to compute the gamma
-	gamma := pri.Secret()
+	gamma, err := pri.Secret()
+	if err != nil {
+		return nil, err
+	}
 	sig := &SchnorrSig{
 		Random:    s.random.Pub,
 		Signature: &gamma,
