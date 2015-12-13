@@ -51,7 +51,7 @@ func (sr *sigReader) Read(p []byte) (int, error) {
 		if hn != n {
 			panic("short hash write")
 		}
-		return n, nil
+		//return n, nil
 	}
 
 	// Perform signature-check on regular EOF
@@ -62,5 +62,7 @@ func (sr *sigReader) Read(p []byte) (int, error) {
 		}
 	}
 	sr.err = err // sticky final status (io.EOF or other error)
-	return 0, err
+
+	// Return number of message bytes
+	return len(p) - len(sr.sb), err
 }
