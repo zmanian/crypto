@@ -3,8 +3,9 @@ package poly
 import (
 	"errors"
 	"fmt"
-	"gopkg.in/dedis/crypto.v0/abstract"
 	"hash"
+
+	"gopkg.in/dedis/crypto.v0/abstract"
 )
 
 // This file describes the Distributed Threshold Schnorr Signature

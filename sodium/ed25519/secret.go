@@ -13,6 +13,7 @@ import (
 	//"runtime"
 	"crypto/cipher"
 	"encoding/hex"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/group"
 )

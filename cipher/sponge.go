@@ -5,6 +5,7 @@ import (
 	"log"
 	//"encoding/hex"
 	"encoding/binary"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/ints"
 	"gopkg.in/dedis/crypto.v0/random"

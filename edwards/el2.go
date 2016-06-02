@@ -4,6 +4,7 @@ import (
 	"math/big"
 	//"encoding/hex"
 	"crypto/cipher"
+
 	"gopkg.in/dedis/crypto.v0/math"
 	"gopkg.in/dedis/crypto.v0/nist"
 )

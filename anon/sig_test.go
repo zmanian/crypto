@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
+	"testing"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/edwards"
 	"gopkg.in/dedis/crypto.v0/nist"
 	"gopkg.in/dedis/crypto.v0/random"
-	"testing"
 )
 
 // This example demonstrates signing and signature verification

@@ -2,8 +2,9 @@ package cipher
 
 import (
 	"crypto/cipher"
-	"gopkg.in/dedis/crypto.v0/abstract"
 	"hash"
+
+	"gopkg.in/dedis/crypto.v0/abstract"
 )
 
 // Construct a general message Cipher

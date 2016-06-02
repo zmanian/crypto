@@ -2,6 +2,7 @@ package nego
 
 import (
 	"fmt"
+
 	"gopkg.in/dedis/crypto.v0/random"
 )
 

@@ -3,14 +3,15 @@ package bench
 import (
 	"crypto/cipher"
 	"crypto/rc4"
+	"testing"
+
+	"golang.org/x/crypto/blowfish"
+	"golang.org/x/crypto/salsa20"
+	"golang.org/x/crypto/twofish"
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/cipher/aes"
 	"gopkg.in/dedis/crypto.v0/cipher/norx"
 	"gopkg.in/dedis/crypto.v0/cipher/sha3"
-	"golang.org/x/crypto/blowfish"
-	"golang.org/x/crypto/salsa20"
-	"golang.org/x/crypto/twofish"
-	"testing"
 )
 
 var buf = make([]byte, 1024*1024)

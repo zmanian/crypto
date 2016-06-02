@@ -4,8 +4,9 @@ package group
 
 import (
 	"crypto/cipher"
-	"gopkg.in/dedis/crypto.v0/abstract"
 	"io"
+
+	"gopkg.in/dedis/crypto.v0/abstract"
 )
 
 // PointEncodeTo provides a generic implementation of Point.EncodeTo

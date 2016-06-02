@@ -1,8 +1,9 @@
 package ed25519
 
 import (
-	"gopkg.in/dedis/crypto.v0/test"
 	"testing"
+
+	"gopkg.in/dedis/crypto.v0/test"
 )
 
 var testSuite = NewAES128SHA256Ed25519(false)

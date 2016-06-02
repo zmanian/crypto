@@ -3,9 +3,10 @@ package proof
 import (
 	"encoding/hex"
 	"fmt"
+	"testing"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/nist"
-	"testing"
 )
 
 func TestRep(t *testing.T) {

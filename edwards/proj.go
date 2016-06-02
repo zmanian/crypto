@@ -2,11 +2,12 @@ package edwards
 
 import (
 	"crypto/cipher"
+	"io"
+	"math/big"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/group"
 	"gopkg.in/dedis/crypto.v0/nist"
-	"io"
-	"math/big"
 )
 
 type projPoint struct {

@@ -2,11 +2,12 @@ package edwards
 
 import (
 	"crypto/sha256"
-	"gopkg.in/dedis/crypto.v0/abstract"
-	"gopkg.in/dedis/crypto.v0/cipher/sha3"
 	"hash"
 	"io"
 	"reflect"
+
+	"gopkg.in/dedis/crypto.v0/abstract"
+	"gopkg.in/dedis/crypto.v0/cipher/sha3"
 	//"gopkg.in/dedis/crypto.v0/edwards/ed25519"
 )
 

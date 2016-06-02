@@ -3,10 +3,11 @@ package cipher
 import (
 	"crypto/cipher"
 	"crypto/hmac"
+	"hash"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/ints"
 	"gopkg.in/dedis/crypto.v0/random"
-	"hash"
 )
 
 type streamCipher struct {

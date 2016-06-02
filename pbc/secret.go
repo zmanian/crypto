@@ -9,11 +9,12 @@ import "C"
 import (
 	"crypto/cipher"
 	"errors"
-	"gopkg.in/dedis/crypto.v0/abstract"
-	"gopkg.in/dedis/crypto.v0/group"
 	"io"
 	"runtime"
 	"unsafe"
+
+	"gopkg.in/dedis/crypto.v0/abstract"
+	"gopkg.in/dedis/crypto.v0/group"
 )
 
 type secret struct {

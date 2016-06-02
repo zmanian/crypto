@@ -9,9 +9,10 @@ package sha3
 // bytes.
 
 import (
+	"hash"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/cipher"
-	"hash"
 )
 
 var sha3opts = []interface{}{cipher.Padding(0x06)}

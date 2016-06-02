@@ -5,6 +5,7 @@ import (
 	"crypto/hmac"
 	"crypto/subtle"
 	"errors"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/random"
 )

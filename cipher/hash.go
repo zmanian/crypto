@@ -1,9 +1,10 @@
 package cipher
 
 import (
+	"hash"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/util"
-	"hash"
 )
 
 // Wrapper to use a generic mesage Cipher as a Hash

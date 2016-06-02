@@ -3,6 +3,7 @@ package shuffle
 import (
 	"crypto/cipher"
 	"errors"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/proof"
 )

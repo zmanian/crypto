@@ -4,13 +4,14 @@ import (
 	"crypto/cipher"
 	"encoding/hex"
 	"errors"
+	"io"
+	"math/big"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/group"
 	"gopkg.in/dedis/crypto.v0/math"
 	"gopkg.in/dedis/crypto.v0/random"
 	"gopkg.in/dedis/crypto.v0/util"
-	"io"
-	"math/big"
 )
 
 var zero = big.NewInt(0)

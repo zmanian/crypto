@@ -15,11 +15,12 @@ import (
 	"compress/flate"
 	"encoding/hex"
 	"encoding/json"
-	"gopkg.in/dedis/crypto.v0/cipher"
 	"hash"
 	"os"
 	"strings"
 	"testing"
+
+	"gopkg.in/dedis/crypto.v0/cipher"
 )
 
 const (

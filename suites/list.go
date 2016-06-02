@@ -4,6 +4,7 @@ package suites
 
 import (
 	"fmt"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/edwards"
 	"gopkg.in/dedis/crypto.v0/edwards/ed25519"

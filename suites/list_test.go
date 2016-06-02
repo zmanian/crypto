@@ -1,8 +1,9 @@
 package suites
 
 import (
-	"gopkg.in/dedis/crypto.v0/test"
 	"testing"
+
+	"gopkg.in/dedis/crypto.v0/test"
 )
 
 func TestSuites(t *testing.T) {

@@ -3,8 +3,9 @@ package poly
 import (
 	"bytes"
 	"fmt"
-	_ "gopkg.in/dedis/crypto.v0/abstract"
 	"testing"
+
+	_ "gopkg.in/dedis/crypto.v0/abstract"
 )
 
 /////// TESTING ///////

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/cipher"
 	"errors"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 )
 

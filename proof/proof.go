@@ -7,6 +7,7 @@ package proof
 
 import (
 	"errors"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 )
 

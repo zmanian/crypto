@@ -6,6 +6,7 @@ import (
 	"crypto/aes"
 	"crypto/sha256"
 	"crypto/sha512"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/cipher"
 )

@@ -13,8 +13,9 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"gopkg.in/dedis/crypto.v0/abstract"
 	"sort"
+
+	"gopkg.in/dedis/crypto.v0/abstract"
 )
 
 type Entry struct {

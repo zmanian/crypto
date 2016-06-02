@@ -2,11 +2,12 @@ package nist
 
 import (
 	"crypto/sha256"
-	"gopkg.in/dedis/crypto.v0/abstract"
-	"gopkg.in/dedis/crypto.v0/cipher/sha3"
 	"hash"
 	"io"
 	"reflect"
+
+	"gopkg.in/dedis/crypto.v0/abstract"
+	"gopkg.in/dedis/crypto.v0/cipher/sha3"
 )
 
 type suite128 struct {

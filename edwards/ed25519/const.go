@@ -5,8 +5,9 @@
 package ed25519
 
 import (
-	"gopkg.in/dedis/crypto.v0/nist"
 	"math/big"
+
+	"gopkg.in/dedis/crypto.v0/nist"
 )
 
 // prime modulus of underlying field = 2^255 - 19

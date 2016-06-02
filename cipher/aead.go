@@ -3,6 +3,7 @@ package cipher
 import (
 	"crypto/cipher"
 	"errors"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/subtle"
 	"gopkg.in/dedis/crypto.v0/util"

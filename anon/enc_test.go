@@ -5,6 +5,7 @@ import (
 	"fmt"
 	//"testing"
 	"encoding/hex"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/nist"
 )

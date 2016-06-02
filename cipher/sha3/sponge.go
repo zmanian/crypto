@@ -7,6 +7,7 @@ package sha3
 import (
 	//"encoding/hex"
 	"encoding/binary"
+
 	"gopkg.in/dedis/crypto.v0/cipher"
 )
 

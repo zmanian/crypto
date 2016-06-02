@@ -2,9 +2,10 @@ package config
 
 import (
 	"errors"
+	"os"
+
 	"github.com/BurntSushi/toml"
 	"gopkg.in/dedis/crypto.v0/util"
-	"os"
 )
 
 // XXX it wouldn't be hard to parameterize the file format parser

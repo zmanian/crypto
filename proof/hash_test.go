@@ -3,6 +3,7 @@ package proof
 import (
 	"encoding/hex"
 	"fmt"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/nist"
 )

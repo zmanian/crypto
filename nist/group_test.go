@@ -1,8 +1,9 @@
 package nist
 
 import (
-	"gopkg.in/dedis/crypto.v0/test"
 	"testing"
+
+	"gopkg.in/dedis/crypto.v0/test"
 )
 
 var testQR512 = NewAES128SHA256QR512()

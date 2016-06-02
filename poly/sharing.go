@@ -6,9 +6,10 @@ import (
 	"crypto/cipher"
 	"errors"
 	"fmt"
+	"io"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 	"gopkg.in/dedis/crypto.v0/random"
-	"io"
 )
 
 // Clique protocol outline:

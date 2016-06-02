@@ -2,6 +2,7 @@ package proof
 
 import (
 	"bytes"
+
 	"gopkg.in/dedis/crypto.v0/abstract"
 )
 
