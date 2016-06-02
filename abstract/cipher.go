@@ -2,8 +2,8 @@ package abstract
 
 import (
 	"errors"
-	"github.com/dedis/crypto/subtle"
-	"github.com/dedis/crypto/util"
+	"gopkg.in/dedis/crypto.v0/subtle"
+	"gopkg.in/dedis/crypto.v0/util"
 )
 
 // CipherState defines an interface to an abstract symmetric message cipher.

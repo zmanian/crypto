@@ -9,8 +9,8 @@ package sha3
 // bytes.
 
 import (
-	"github.com/dedis/crypto/abstract"
-	"github.com/dedis/crypto/cipher"
+	"gopkg.in/dedis/crypto.v0/abstract"
+	"gopkg.in/dedis/crypto.v0/cipher"
 	"hash"
 )
 

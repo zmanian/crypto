@@ -3,9 +3,9 @@ package cipher
 import (
 	"crypto/cipher"
 	"errors"
-	"github.com/dedis/crypto/abstract"
-	"github.com/dedis/crypto/subtle"
-	"github.com/dedis/crypto/util"
+	"gopkg.in/dedis/crypto.v0/abstract"
+	"gopkg.in/dedis/crypto.v0/subtle"
+	"gopkg.in/dedis/crypto.v0/util"
 )
 
 type cipherAEAD struct {

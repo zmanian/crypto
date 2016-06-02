@@ -1,8 +1,8 @@
 package cipher
 
 import (
-	"github.com/dedis/crypto/abstract"
-	"github.com/dedis/crypto/util"
+	"gopkg.in/dedis/crypto.v0/abstract"
+	"gopkg.in/dedis/crypto.v0/util"
 	"hash"
 )
 

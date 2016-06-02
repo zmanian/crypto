@@ -47,11 +47,11 @@ import (
 	"crypto/cipher"
 	"crypto/sha256"
 	"encoding/hex"
-	"github.com/dedis/crypto/abstract"
-	"github.com/dedis/crypto/group"
-	"github.com/dedis/crypto/nist"
-	"github.com/dedis/crypto/random"
-	"github.com/dedis/crypto/sha3"
+	"gopkg.in/dedis/crypto.v0/abstract"
+	"gopkg.in/dedis/crypto.v0/group"
+	"gopkg.in/dedis/crypto.v0/nist"
+	"gopkg.in/dedis/crypto.v0/random"
+	"gopkg.in/dedis/crypto.v0/sha3"
 	"math/big"
 )
 

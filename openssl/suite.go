@@ -5,8 +5,8 @@
 package openssl
 
 import (
-	"github.com/dedis/crypto/abstract"
-	"github.com/dedis/crypto/cipher/sha3"
+	"gopkg.in/dedis/crypto.v0/abstract"
+	"gopkg.in/dedis/crypto.v0/cipher/sha3"
 	"hash"
 	"io"
 	"reflect"

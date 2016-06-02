@@ -1,8 +1,8 @@
 package shuffle
 
 import (
-	"github.com/dedis/crypto/edwards"
-	"github.com/dedis/crypto/nist"
+	"gopkg.in/dedis/crypto.v0/edwards"
+	"gopkg.in/dedis/crypto.v0/nist"
 	"testing"
 )
 

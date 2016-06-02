@@ -1,7 +1,7 @@
 package ed25519
 
 import (
-	"github.com/dedis/crypto/test"
+	"gopkg.in/dedis/crypto.v0/test"
 	"testing"
 )
 

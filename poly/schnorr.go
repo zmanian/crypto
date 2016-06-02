@@ -3,7 +3,7 @@ package poly
 import (
 	"errors"
 	"fmt"
-	"github.com/dedis/crypto/abstract"
+	"gopkg.in/dedis/crypto.v0/abstract"
 	"hash"
 )
 

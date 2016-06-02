@@ -3,7 +3,7 @@ package config
 import (
 	"errors"
 	"github.com/BurntSushi/toml"
-	"github.com/dedis/crypto/util"
+	"gopkg.in/dedis/crypto.v0/util"
 	"os"
 )
 

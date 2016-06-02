@@ -2,7 +2,7 @@ package cipher
 
 import (
 	"crypto/cipher"
-	"github.com/dedis/crypto/abstract"
+	"gopkg.in/dedis/crypto.v0/abstract"
 	"hash"
 )
 

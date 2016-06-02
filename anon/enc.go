@@ -3,8 +3,8 @@ package anon
 import (
 	"crypto/cipher"
 	"errors"
-	"github.com/dedis/crypto/abstract"
-	"github.com/dedis/crypto/subtle"
+	"gopkg.in/dedis/crypto.v0/abstract"
+	"gopkg.in/dedis/crypto.v0/subtle"
 )
 
 // XXX belongs in crypto package?

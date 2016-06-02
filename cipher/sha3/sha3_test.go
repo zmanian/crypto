@@ -15,7 +15,7 @@ import (
 	"compress/flate"
 	"encoding/hex"
 	"encoding/json"
-	"github.com/dedis/crypto/cipher"
+	"gopkg.in/dedis/crypto.v0/cipher"
 	"hash"
 	"os"
 	"strings"

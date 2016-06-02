@@ -9,8 +9,8 @@ package sha3
 // functions for hashing bytes to arbitrary-length output.
 
 import (
-	"github.com/dedis/crypto/abstract"
-	"github.com/dedis/crypto/cipher"
+	"gopkg.in/dedis/crypto.v0/abstract"
+	"gopkg.in/dedis/crypto.v0/cipher"
 	"io"
 )
 

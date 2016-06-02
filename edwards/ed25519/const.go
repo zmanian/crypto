@@ -5,7 +5,7 @@
 package ed25519
 
 import (
-	"github.com/dedis/crypto/nist"
+	"gopkg.in/dedis/crypto.v0/nist"
 	"math/big"
 )
 
