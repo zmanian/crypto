@@ -4,6 +4,7 @@ import (
 	"crypto/cipher"
 	"crypto/sha256"
 	"crypto/sha512"
+	"encoding/binary"
 	"hash"
 	"io"
 	"reflect"
@@ -15,6 +16,16 @@ import (
 
 type suiteEd25519 struct {
 	Curve
+}
+
+func (s *suiteEd25519) IndexedHash(digest *[32]byte, m *[]byte, i int) {
+	bs := make([]byte, 2)
+	index := uint16(1<<8 - 1 - i)
+	binary.LittleEndian.PutUint16(bs, index)
+	*m = append(bs[:], *m...)
+	d := sha512.Sum512(*m)
+	scReduce(digest, &d)
+
 }
 
 // XXX non-NIST ciphers?
