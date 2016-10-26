@@ -23,6 +23,20 @@ func PrivateKeyToCurve25519(curve25519Private *[32]byte, privateKey *[64]byte) {
 	copy(curve25519Private[:], digest)
 }
 
+func montgomeryXtoEdwardsY(outY, x *fieldElement) {
+
+	//y = ( u - 1) * inv( u + 1) (mod p)
+	var oneMinusX fieldElement
+	feOne(&oneMinusX)
+	feSub(&oneMinusX, &oneMinusX, x)
+
+	feOne(outY)
+	feAdd(outY, outY, x)
+	feInvert(outY, outY)
+
+	feMul(outY, outY, &oneMinusX)
+}
+
 func edwardsToMontgomeryX(outX, y *fieldElement) {
 	// We only need the x-coordinate of the curve25519 point, which I'll
 	// call u. The isomorphism is u=(y+1)/(1-y), since y=Y/Z, this gives
